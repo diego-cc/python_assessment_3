@@ -11,6 +11,11 @@ import task_a.utils.utils as utils
 
 
 class Colourful:
+    """GUI component of Task A"""
+
+    WINDOW_WIDTH = 1366
+    WINDOW_HEIGHT = 768
+
     def __init__(self):
         self.__root = Tk()
         self.__colours = []
@@ -30,7 +35,10 @@ class Colourful:
         It basically generates one list with 10 random colours and another one with their respective complements
         (20 in total).
 
-        The end result is
+        The end result is a grid with variable number of rows and columns that fits the window containing each colour
+        in a square frame, with their respective names, RGB and HSL values
+
+        Adjust the parameters below to create different kinds of grids
         """
 
         self.__colours = utils.get_colours(num=10)
@@ -112,10 +120,11 @@ class Colourful:
 
     def run(self):
         """Executes the GUI program"""
+
         self.__root.wm_title('Colourful')
-        self.__root.wm_minsize(width=1366, height=768)
+        self.__root.wm_minsize(width=self.WINDOW_WIDTH, height=self.WINDOW_HEIGHT)
         self.__root.geometry(
-            f'800x600+{math.floor(self.__root.winfo_screenwidth() / 2 - 683)}+{math.floor(self.__root.winfo_screenheight() / 2 - 410)}')
+            f'800x600+{math.floor(self.__root.winfo_screenwidth() / 2 - self.WINDOW_WIDTH / 2)}+{math.floor(self.__root.winfo_screenheight() / 2 - self.WINDOW_HEIGHT / 2 - 26)}')
 
         generate_colours_btn = Button(self.__root, text='Generate colours', padx=20, pady=5, fg='red', bg='lightgreen',
                                       command=self.handle_generate_colours)

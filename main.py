@@ -9,9 +9,11 @@ import task_a.gui.colourful as colourful
 
 
 def init():
-    print('Welcome! Choose which program you want to run.')
+    """Presents all three programs available"""
+
+    print('\nWelcome! Choose which program you want to run.')
     print('Simply enter a number (e.g. 1) and press Enter.')
-    print('Type "q" and press Enter to quit.')
+    print('\nType "q" and press Enter to quit.')
     print('\n')
 
     print(
@@ -31,12 +33,14 @@ def init():
     selected = get_input()
 
     if selected == '1':
-        colourful.run()
+        c = colourful.Colourful()
+        c.run()
     elif selected == '2':
         print('To be implemented')
     elif selected == '3':
         print('To be implemented')
     else:
+        print('\nBye!')
         sys.exit(0)
 
 

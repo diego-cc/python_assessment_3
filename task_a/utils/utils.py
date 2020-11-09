@@ -10,6 +10,12 @@ from typing import List
 
 
 def all_colours():
+    """Encapsulates full list of colours available in this program
+
+    This function was created in order to avoid circular references
+
+    :return: Full list of colours
+    """
     import task_a.colours.colour as colour
 
     return [
@@ -94,7 +100,7 @@ def rgb2hex(rgb):
 def get_complement(c):
     """Gets complementary colour
 
-    :param colour: Base colour
+    :param c: Base colour
     :return: Complementary colour
     """
     import task_a.colours.colour as colour
