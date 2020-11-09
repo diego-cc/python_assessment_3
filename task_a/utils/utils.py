@@ -5,6 +5,7 @@ Created at: 08/11/2020 7:10 pm
 File: utils.py
 """
 import random
+import colourise
 from typing import List
 
 
@@ -17,7 +18,7 @@ def all_colours():
         colour.Colour(name="Tile", rgb=colour.RGB(r=255, g=110, b=64)),
         colour.Colour(name="Bright Green", rgb=colour.RGB(r=100, g=221, b=23)),
         colour.Colour(name="Baby Blue", rgb=colour.RGB(r=128, g=216, b=255)),
-        colour.Colour(name="Dark Pink", rgb=colour.RGB(r=216, g=27, b=96)),
+        colour.Colour(name="Dark Red", rgb=colour.RGB(r=216, g=27, b=96)),
         colour.Colour(name="Dark Blue", rgb=colour.RGB(r=2, g=136, b=209)),
         colour.Colour(name="Dark Yellow", rgb=colour.RGB(r=175, g=180, b=43)),
         colour.Colour(name="Ephemeral Green", rgb=colour.RGB(r=200, g=230, b=201)),
@@ -82,4 +83,31 @@ def get_colours(num: int = 20, unique: bool = True):
 
 
 def rgb2hex(rgb):
+    """Converts RGB colours to HEX
+
+    :param rgb: RGB colour
+    :return: HEX colour as a string with a '#'
+    """
     return '#' + '%02x%02x%02x' % (rgb.r, rgb.g, rgb.b)
+
+
+def get_complement(c):
+    """Gets complementary colour
+
+    :param colour: Base colour
+    :return: Complementary colour
+    """
+    import task_a.colours.colour as colour
+
+    complement = colourise.complement_rgb(r=c.rgb.r, g=c.rgb.g, b=c.rgb.b)
+    return colour.Colour(name=f'{c.name} (Complement)',
+                         rgb=colour.RGB(r=int(complement[0]), g=int(complement[1]), b=int(complement[2])))
+
+
+def get_complements(colours):
+    """Converts all colours in a list to their respective complements
+
+    :param colours: Colours to be converted
+    :return: List of complements
+    """
+    return list(map(lambda c: get_complement(c), colours))

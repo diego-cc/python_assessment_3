@@ -10,72 +10,116 @@ import math
 import task_a.utils.utils as utils
 
 
-def run():
-    """Executes the GUI program"""
-    root = Tk()
-    root.wm_title('Colourful')
-    root.wm_minsize(width=800, height=600)
-    root.geometry(
-        f'800x600+{math.floor(root.winfo_screenwidth() / 2 - 400)}+{math.floor(root.winfo_screenheight() / 2 - 300)}')
+class Colourful:
+    def __init__(self):
+        self.__root = Tk()
+        self.__colours = []
+        self.__complements = []
+        self.__frames = []
+        self.__complement_frames = []
+        self.__colours_name = []
+        self.__complements_colours_name = []
+        self.__colours_rgb = []
+        self.__complements_colours_rgb = []
+        self.__colours_hsl = []
+        self.__complements_colours_hsl = []
 
-    frames = []
-    colours_name = []
-    colours_rgb = []
-    colours_hsl = []
+    def handle_generate_colours(self):
+        """Event handler that runs when user clicks the `Generate colours` button
 
-    def handle_click():
-        print('Clicked generate colours:')
-        print(frames)
-        
-        # clear previous colours
-        if len(frames):
-            for f in frames:
-                if f:
-                    f.destroy()
+        It basically generates one list with 10 random colours and another one with their respective complements
+        (20 in total).
 
-        if len(colours_name):
-            for c in colours_name:
-                if c:
-                    c.destroy()
+        The end result is
+        """
 
-        if len(colours_rgb):
-            for c in colours_rgb:
-                if c:
-                    c.destroy()
+        self.__colours = utils.get_colours(num=10)
+        self.__complements = utils.get_complements(colours=self.__colours)
 
-        if len(colours_hsl):
-            for c in colours_hsl:
-                if c:
-                    c.destroy()
-
-        colours = utils.get_colours()
-
-        init_relx = 0.1
-        init_rely = 0.2
-        max_relx = 0.9
+        init_relx = 0.04
+        init_rely = 0.15
+        max_relx = 0.8
         relx = init_relx
         rely = init_rely
-        relx_increment = 0.15
-        rely_increment = 0.25
+        relx_increment = 0.16
+        rely_increment = 0.2
+        text_y_increment = 0.03
 
-        for c in colours:
-            frame = Frame(root, width=50, height=50, bg=c.hex).place(relx=relx, rely=rely, anchor=N + W)
-            colour_name = Label(root, text=c.name, fg='red').place(relx=relx, rely=rely + 0.1, anchor=N + W)
-            colour_rgb = Label(root, text=c.rgb, fg='red').place(relx=relx, rely=rely + 0.15, anchor=N + W)
-            # colour_hsl = Label(root, text=c.hsl, fg='red').place(relx=relx, rely=rely + 0.2, anchor=N + W)
+        if len(self.__frames) and len(self.__colours_name) and len(self.__colours_hsl):
+            for i, c in enumerate(self.__colours):
+                self.__frames[i]['bg'] = c.hex
+                self.__colours_name[i]['text'] = c.name
+                self.__colours_rgb[i]['text'] = c.rgb
+                self.__colours_hsl[i]['text'] = c.hsl
 
-            if relx >= max_relx:
-                relx = init_relx
-                rely += rely_increment
-            else:
-                relx += relx_increment
+                self.__complement_frames[i]['bg'] = self.__complements[i].hex
+                self.__complements_colours_name[i]['text'] = self.__complements[i].name
+                self.__complements_colours_rgb[i]['text'] = self.__complements[i].rgb
+                self.__complements_colours_hsl[i]['text'] = self.__complements[i].hsl
 
-            frames.append(frame)
-            colours_name.append(colour_name)
-            colours_rgb.append(colour_rgb)
-            # colours_hsl.append(colour_hsl)
+                if relx + 2 * relx_increment >= max_relx:
+                    # jump to next row
+                    rely += rely_increment
+                    relx = init_relx
+                else:
+                    relx += 2 * relx_increment
+        else:
+            for i, c in enumerate(self.__colours):
+                frame = Frame(self.__root, width=50, height=50, bg=c.hex)
+                frame.place(relx=relx, rely=rely, anchor=N + W)
 
-    generate_colours_btn = Button(root, text='Generate colours', padx=20, pady=5, fg='red', bg='lightgreen',
-                                  command=handle_click).place(relx=0.5, rely=0.05, anchor=N)
+                complement_frame = Frame(self.__root, width=50, height=50, bg=self.__complements[i].hex)
+                complement_frame.place(relx=relx + relx_increment, rely=rely, anchor=N + W)
 
-    root.mainloop()
+                colour_name = Label(self.__root, text=c.name, fg='red')
+                colour_name.place(relx=relx, rely=rely + rely_increment / 3 + text_y_increment / 2, anchor=N + W)
+
+                complement_colour_name = Label(self.__root, text=self.__complements[i].name, fg='red')
+                complement_colour_name.place(relx=relx + relx_increment,
+                                             rely=rely + rely_increment / 3 + text_y_increment / 2, anchor=N + W)
+
+                colour_rgb = Label(self.__root, text=c.rgb, fg='red')
+                colour_rgb.place(relx=relx, rely=rely + rely_increment / 3 + 3 * text_y_increment / 2, anchor=N + W)
+
+                complement_colour_rgb = Label(self.__root, text=self.__complements[i].rgb, fg='red')
+                complement_colour_rgb.place(relx=relx + relx_increment,
+                                            rely=rely + rely_increment / 3 + 3 * text_y_increment / 2,
+                                            anchor=N + W)
+
+                colour_hsl = Label(self.__root, text=c.hsl, fg='red')
+                colour_hsl.place(relx=relx, rely=rely + rely_increment / 3 + 5 * text_y_increment / 2, anchor=N + W)
+
+                complement_colour_hsl = Label(self.__root, text=self.__complements[i].hsl, fg='red')
+                complement_colour_hsl.place(relx=relx + relx_increment,
+                                            rely=rely + rely_increment / 3 + 5 * text_y_increment / 2, anchor=N + W)
+
+                self.__frames.append(frame)
+                self.__colours_name.append(colour_name)
+                self.__colours_rgb.append(colour_rgb)
+                self.__colours_hsl.append(colour_hsl)
+
+                self.__complement_frames.append(complement_frame)
+                self.__complements_colours_name.append(complement_colour_name)
+                self.__complements_colours_rgb.append(complement_colour_rgb)
+                self.__complements_colours_hsl.append(complement_colour_hsl)
+
+                if relx + 2 * relx_increment >= max_relx:
+                    # jump to next row
+                    rely += rely_increment
+                    relx = init_relx
+                else:
+                    relx += 2 * relx_increment
+
+    def run(self):
+        """Executes the GUI program"""
+        self.__root.wm_title('Colourful')
+        self.__root.wm_minsize(width=1366, height=768)
+        self.__root.geometry(
+            f'800x600+{math.floor(self.__root.winfo_screenwidth() / 2 - 683)}+{math.floor(self.__root.winfo_screenheight() / 2 - 410)}')
+
+        generate_colours_btn = Button(self.__root, text='Generate colours', padx=20, pady=5, fg='red', bg='lightgreen',
+                                      command=self.handle_generate_colours)
+
+        generate_colours_btn.place(relx=0.5, rely=0.05, anchor=N)
+
+        self.__root.mainloop()

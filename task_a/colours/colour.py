@@ -6,6 +6,7 @@ File: colour.py
 """
 import colourise
 
+
 class RGB:
     """Helper class that defines RGB parameters for a Colour"""
 
@@ -71,7 +72,7 @@ class HSL:
         return self.__l
 
     def __str__(self):
-        return f'HSL({self.h, self.s, self.l}'
+        return f'HSL({self.h}, {self.s}, {self.l})'
 
 
 class Colour:
@@ -83,7 +84,7 @@ class Colour:
         self.__name = name
         self.__rgb = rgb
         hsl_values = colourise.rgb2hsl(rgb.r, rgb.g, rgb.b)
-        self.__hsl = HSL(hsl_values[0], hsl_values[1], hsl_values[2])
+        self.__hsl = HSL(round(hsl_values[0], 2), round(hsl_values[1], 2), round(hsl_values[2], 2))
         self.__hex = utils.rgb2hex(rgb=rgb)
 
     @property
