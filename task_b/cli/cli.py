@@ -15,6 +15,8 @@ PORT = 5555
 
 
 def get_user_input():
+    """Gets user input."""
+
     inp = input('Your question: ')
 
     while not inp.strip():
@@ -25,6 +27,10 @@ def get_user_input():
 
 
 def print_header():
+    """Presents initial information about this program and captures user input.
+
+    :return: Question asked by user
+    """
     print('\nWelcome! Ask the Magic 8-Ball a question below:')
     print('Enter "q" to quit the application\n')
     q = get_user_input()
@@ -33,6 +39,12 @@ def print_header():
 
 
 def start():
+    """Entry point of this program.
+
+    Two threads are created whenever a question is asked - one for the server and another one for the client.
+
+    This prevents blocking the main thread of the program with sockets and simulates real client-server handshakes.
+    """
     q = print_header()
 
     while q.strip().lower() != 'q':

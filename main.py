@@ -7,6 +7,7 @@ File: main.py
 import sys
 import task_a.gui.colourful as colourful
 import task_b.cli.cli as task_b_cli
+import task_c.cli.cli as task_c_cli
 
 
 def init():
@@ -39,7 +40,7 @@ def init():
     elif selected == '2':
         task_b_cli.start()
     elif selected == '3':
-        print('To be implemented')
+        task_c_cli.start()
     else:
         print('\nBye!')
         sys.exit(0)
