@@ -6,6 +6,7 @@ File: main.py
 """
 import sys
 import task_a.gui.colourful as colourful
+import task_b.cli.cli as task_b_cli
 
 
 def init():
@@ -18,7 +19,7 @@ def init():
 
     print(
         'Option 1: Task A - Colourful: A GUI application that displays random colours and their respective complements')
-    print('Option 2: Task B - A Magic 8-ball CLI application')
+    print('Option 2: Task B - A Magic 8-ball CLI application, implemented with sockets')
     print('Option 3: Task C - A signal handler CLI application')
     print('\n')
 
@@ -36,7 +37,7 @@ def init():
         c = colourful.Colourful()
         c.run()
     elif selected == '2':
-        print('To be implemented')
+        task_b_cli.start()
     elif selected == '3':
         print('To be implemented')
     else:
