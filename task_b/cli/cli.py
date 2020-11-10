@@ -57,7 +57,7 @@ def start():
 
         print(f'{client_thread.name} starting...sending request with question...\n')
 
-        time.sleep(2)
+        time.sleep(1)
 
         client_thread.start()
         client_thread.join()
