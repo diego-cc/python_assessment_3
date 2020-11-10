@@ -24,21 +24,24 @@ class Colourful:
         self.__complement_frames = []
         self.__colours_name = []
         self.__complements_colours_name = []
-        self.__colours_rgb = []
-        self.__complements_colours_rgb = []
-        self.__colours_hsl = []
-        self.__complements_colours_hsl = []
+        # self.__colours_rgb = []
+        # self.__complements_colours_rgb = []
+        # self.__colours_hsl = []
+        # self.__complements_colours_hsl = []
+        self.__colours_hex = []
+        self.__complements_colours_hex = []
 
     def handle_generate_colours(self):
-        """Event handler that runs when user clicks the `Generate colours` button
+        """Event handler that runs when user clicks the `Generate colours` button.
 
         It basically generates one list with 10 random colours and another one with their respective complements
         (20 in total).
 
         The end result is a grid with variable number of rows and columns that fits the window containing each colour
-        in a square frame, with their respective names, RGB and HSL values
+        in a square frame, with their respective names and HEX values (uncomment the lines regarding RGB and HSL
+        values to display them as well).
 
-        Adjust the parameters below to create different kinds of grids
+        Adjust the parameters below to create different kinds of grids.
         """
 
         self.__colours = utils.get_colours(num=10)
@@ -53,17 +56,19 @@ class Colourful:
         rely_increment = 0.2
         text_y_increment = 0.03
 
-        if len(self.__frames) and len(self.__colours_name) and len(self.__colours_hsl):
+        if len(self.__frames):
             for i, c in enumerate(self.__colours):
                 self.__frames[i]['bg'] = c.hex
                 self.__colours_name[i]['text'] = c.name
-                self.__colours_rgb[i]['text'] = c.rgb
-                self.__colours_hsl[i]['text'] = c.hsl
+                # self.__colours_rgb[i]['text'] = c.rgb
+                # self.__colours_hsl[i]['text'] = c.hsl
+                self.__colours_hex[i]['text'] = c.hex.upper()
 
                 self.__complement_frames[i]['bg'] = self.__complements[i].hex
                 self.__complements_colours_name[i]['text'] = self.__complements[i].name
-                self.__complements_colours_rgb[i]['text'] = self.__complements[i].rgb
-                self.__complements_colours_hsl[i]['text'] = self.__complements[i].hsl
+                # self.__complements_colours_rgb[i]['text'] = self.__complements[i].rgb
+                # self.__complements_colours_hsl[i]['text'] = self.__complements[i].hsl
+                self.__complements_colours_hex[i]['text'] = self.__complements[i].hex.upper()
 
                 if relx + 2 * relx_increment >= max_relx:
                     # jump to next row
@@ -86,30 +91,40 @@ class Colourful:
                 complement_colour_name.place(relx=relx + relx_increment,
                                              rely=rely + rely_increment / 3 + text_y_increment / 2, anchor=N + W)
 
-                colour_rgb = Label(self.__root, text=c.rgb, fg='red')
-                colour_rgb.place(relx=relx, rely=rely + rely_increment / 3 + 3 * text_y_increment / 2, anchor=N + W)
+                colour_hex = Label(self.__root, text=c.hex.upper(), fg='red')
+                colour_hex.place(relx=relx, rely=rely + rely_increment / 3 + 3 * text_y_increment / 2, anchor=N + W)
 
-                complement_colour_rgb = Label(self.__root, text=self.__complements[i].rgb, fg='red')
-                complement_colour_rgb.place(relx=relx + relx_increment,
+                complement_colour_hex = Label(self.__root, text=self.__complements[i].hex.upper(), fg='red')
+                complement_colour_hex.place(relx=relx + relx_increment,
                                             rely=rely + rely_increment / 3 + 3 * text_y_increment / 2,
                                             anchor=N + W)
 
-                colour_hsl = Label(self.__root, text=c.hsl, fg='red')
-                colour_hsl.place(relx=relx, rely=rely + rely_increment / 3 + 5 * text_y_increment / 2, anchor=N + W)
+                # colour_rgb = Label(self.__root, text=c.rgb, fg='red')
+                # colour_rgb.place(relx=relx, rely=rely + rely_increment / 3 + 3 * text_y_increment / 2, anchor=N + W)
 
-                complement_colour_hsl = Label(self.__root, text=self.__complements[i].hsl, fg='red')
-                complement_colour_hsl.place(relx=relx + relx_increment,
-                                            rely=rely + rely_increment / 3 + 5 * text_y_increment / 2, anchor=N + W)
+                # complement_colour_rgb = Label(self.__root, text=self.__complements[i].rgb, fg='red')
+                # complement_colour_rgb.place(relx=relx + relx_increment,
+                #                             rely=rely + rely_increment / 3 + 3 * text_y_increment / 2,
+                #                             anchor=N + W)
+
+                # colour_hsl = Label(self.__root, text=c.hsl, fg='red')
+                # colour_hsl.place(relx=relx, rely=rely + rely_increment / 3 + 5 * text_y_increment / 2, anchor=N + W)
+                #
+                # complement_colour_hsl = Label(self.__root, text=self.__complements[i].hsl, fg='red')
+                # complement_colour_hsl.place(relx=relx + relx_increment,
+                #                             rely=rely + rely_increment / 3 + 5 * text_y_increment / 2, anchor=N + W)
 
                 self.__frames.append(frame)
                 self.__colours_name.append(colour_name)
-                self.__colours_rgb.append(colour_rgb)
-                self.__colours_hsl.append(colour_hsl)
+                # self.__colours_rgb.append(colour_rgb)
+                # self.__colours_hsl.append(colour_hsl)
+                self.__colours_hex.append(colour_hex)
 
                 self.__complement_frames.append(complement_frame)
                 self.__complements_colours_name.append(complement_colour_name)
-                self.__complements_colours_rgb.append(complement_colour_rgb)
-                self.__complements_colours_hsl.append(complement_colour_hsl)
+                # self.__complements_colours_rgb.append(complement_colour_rgb)
+                # self.__complements_colours_hsl.append(complement_colour_hsl)
+                self.__complements_colours_hex.append(complement_colour_hex)
 
                 if relx + 2 * relx_increment >= max_relx:
                     # jump to next row
